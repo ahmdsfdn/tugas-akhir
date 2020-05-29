@@ -1,0 +1,53 @@
+.lingkaran-profil {
+	max-width: 200px;
+	max-height: 200px;
+	border-radius: 4px;
+	border: 5px;
+}
+
+.laporan{
+	overflow: hidden;
+	opacity: 0;
+	height: 0;
+	transform: translate(0, 50px);
+	transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+
+.laporan.muncul{
+	height: 100%; opacity: 1;
+	transition: height 0ms 0ms, opacity 600ms 0ms;
+	margin-bottom: 150px;
+}
+
+.border-biru {
+	border: 2px solid #f0ad4e;
+}
+
+.border-ijo{
+	border: 2px solid #5cb85c;
+}
+.kaskeluar {
+	overflow: hidden;
+	opacity: 0;
+	height: 0;
+	transform: translate(0, 50px);
+	transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+
+.kaskeluar.muncul {
+	height: 100%; opacity: 1;margin-bottom: 100px;
+	transition: height 0ms 0ms, opacity 600ms 0ms;
+}
+
+.kasmasuk{
+	overflow: hidden;
+	opacity: 0;
+	height: 0;
+	transform: translate(0, 50px);
+	transition: height 0ms 400ms, opacity 400ms 0ms;
+}
+
+.kasmasuk.muncul {
+	height: 100%; opacity: 1;margin-bottom: 100px;
+	transition: height 0ms 0ms, opacity 600ms 0ms;
+}
