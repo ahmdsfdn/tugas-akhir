@@ -28,8 +28,8 @@
 		          		<div class="form-group col-12 col-md-5">
 		          			<h5>Tahun</h3>
 		          			<select name="tahun" id="tahun" class="form-control">
-		          				<?php $tahun = date('Y') - 1; 
-		          					  $index = 6;
+		          				<?php $tahun = date('Y'); 
+		          					  $index = 10;
 		          				?>
 		          				<?php for ($i=0; $i < $index ; $i++) : ?>
 		          					<?php if ($tahun-$i == $tahun): ?>

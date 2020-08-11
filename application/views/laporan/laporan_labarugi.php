@@ -11,13 +11,18 @@
 div { 
  text-align: center;
 }
+
+.rata-kanan {
+	text-align: right;
+}
 table {
  
 
-  width: 1000px;
+  width: 700px;
   border-collapse: collapse;
   margin-left:auto; /* Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
   margin-right:auto; /* Sehingga tampilan header website akan berada tepat di tengah-tengah layar monitor */
+  
 }
 
 table th {
@@ -29,7 +34,7 @@ table th {
 }
 
 table td {
-  padding: 10px 10px;
+  padding: 5px 10px;
   border: 2px solid #e0e0e0;
 }
 
@@ -45,7 +50,7 @@ h4 {
 
 #header{
 			font-family: Arial, Helvetica, sans-serif;
-			width:900px; /* Digunakan untuk mengatur lebar header */
+			width:600px; /* Digunakan untuk mengatur lebar header */
 			height: 150px;
 			margin-left:auto; /* Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
 			margin-right:auto; /* Sehingga tampilan header website akan berada tepat di tengah-tengah layar monitor */
@@ -106,11 +111,11 @@ h4 {
 						  	<?php
 
 						  			// total saldo awal
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -171,11 +176,11 @@ h4 {
 						
 						  	<?php
 						  	 			// total saldo awal
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -223,7 +228,10 @@ h4 {
 										$tot_perpos[$pa_n['pos_akun']] = $debit - $kredit;
 									}
 
-								
+								if ($pa_n['akun'] == 'Beban Pajak') {
+									$jumlah_pajak = $kredit-$debit;
+				
+								}
 
 						  	 ?>
 						<?php endforeach; ?>
@@ -238,7 +246,7 @@ h4 {
 							<tr>
 									<td><?= $tp['kode_akun']; ?></td>
 									<td><?= $tp['akun']; ?></td>
-									<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+									<td><?= rupiah_cetak($tot_pos[$tp['akun']]); ?></td>
 									<td></td>
 							</tr>
 							<?php endforeach ?>
@@ -248,9 +256,9 @@ h4 {
 									<td style="background-color: #D7ECD9";>Jumlah Total</td>
 									<!-- MENGINISIASI BAHWA TOT PERPOS HARUS 0 JIKA TIDAK ADA DATA -->
 									<?php if (!empty($tot_perpos[$pa])): ?>
-										<td style="background-color: #D7ECD9";><?= rupiah($tot_perpos[$pa]); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak($tot_perpos[$pa]); ?></td>
 									<?php else: ?>
-										<td style="background-color: #D7ECD9";><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak($tot_perpos[$pa] = 0); ?></td>
 									<?php endif ?>
 									
 							</tr>
@@ -286,11 +294,11 @@ h4 {
 						  		
 						  		if ($this->input->post('tanggal_awal') == date($tahun_jika.'-01-01')) {
 
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -310,11 +318,11 @@ h4 {
 						  		} else {
 
 						  				// total saldo awal
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -347,11 +355,11 @@ h4 {
 
 						  	} elseif ($this->input->post('tahun_post') && $this->input->post('bulan_post')) {
 						  		
-						  		$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  		$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -370,11 +378,11 @@ h4 {
 								$kredit = $sa_k + $kre;
 						  	
 						  	} elseif ($this->input->post('tahun_post')) {
-						  		$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  		$this->db->where('year(tanggal_transaksi)',$tahun);
 						  		$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 						  		$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -391,11 +399,11 @@ h4 {
 
 						  	} else {
 
-						  		$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  		$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
@@ -420,6 +428,9 @@ h4 {
 										$tot_pos[$pa_n['akun']] =  $debit - $kredit  ;
 									}	
 
+								if ($pa_n['akun'] == 'Beban Pajak') {
+									$jumlah_pajak = $kredit - $debit;
+								}
 						  	 ?>
 						<?php endforeach; ?>
 
@@ -433,11 +444,11 @@ h4 {
 						  		
 						  		if ($this->input->post('tanggal_awal') == date($tahun_jika.'-01-01')) {
 
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -457,11 +468,11 @@ h4 {
 						  		} else {
 
 						  				// total saldo awal
-						  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  			$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(debit) as total');
 									$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-									$this->db->where('year(tanggal_transaksi)',$tahun-1);
+									$this->db->where('year(tanggal_transaksi)',$tahun);
 						  			$this->db->select('SUM(kredit) as total');
 									$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -494,11 +505,11 @@ h4 {
 
 						  	} elseif ($this->input->post('tahun_post') && $this->input->post('bulan_post')) {
 						  		
-						  		$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  		$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -518,11 +529,11 @@ h4 {
 						  	
 						  	} elseif ($this->input->post('tahun_post')) {
 
-						  	 	$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  	 	$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -539,11 +550,11 @@ h4 {
 
 						  	} else {
 						  		
-						  		$this->db->where('year(tanggal_transaksi)',$tahun-1);
+						  		$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(debit) as total');
 								$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
-								$this->db->where('year(tanggal_transaksi)',$tahun-1);
+								$this->db->where('year(tanggal_transaksi)',$tahun);
 					  			$this->db->select('SUM(kredit) as total');
 								$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -580,7 +591,7 @@ h4 {
 							<tr>
 									<td><?= $tp['kode_akun']; ?></td>
 									<td><?= $tp['akun']; ?></td>
-									<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+									<td><?= rupiah_cetak($tot_pos[$tp['akun']]); ?></td>
 									<td></td>
 							</tr>
 							<?php endforeach ?>
@@ -589,9 +600,9 @@ h4 {
 									<td></td>
 									<td style="background-color: #D7ECD9";>Jumlah Total</td>
 									<?php if (!empty($tot_perpos[$pa])): ?>
-										<td style="background-color: #D7ECD9";><?= rupiah($tot_perpos[$pa]); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak($tot_perpos[$pa]); ?></td>
 									<?php else: ?>
-										<td style="background-color: #D7ECD9";><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak($tot_perpos[$pa] = 0); ?></td>
 									<?php endif ?>
 									
 							</tr>
@@ -602,13 +613,18 @@ h4 {
 			<?php endif ?>
 			
 							<?php  
-							$saldo_laba = $total_akhir['Pendapatan'] - $total_akhir['Beban'] - $total_akhir['Pajak']; ?>
+							$saldo_laba = $total_akhir['Pendapatan'] - $total_akhir['Beban']; ?>
 
 							<tr  >
+									
 									<td style="background-color: #000"></td>
-									<td style="background-color: #000; color: #fff;font-weight: bold;">Laba Bersih Setelah Pajak</td>
+									<?php if (!empty($jumlah_pajak)): ?>
+										<td style="background-color: #000; color: #fff;font-weight: bold;">Laba Bersih Setelah Pajak</td>
+									<?php else: ?>
+										<td style="background-color: #000; color: #fff;font-weight: bold;">Laba Bersih</td>
+									<?php endif ?>
 									<td style="background-color: #000"></td>
-									<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah($saldo_laba); ?></td>
+									<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah_cetak($saldo_laba); ?></td>
 									
 							</tr>
 				

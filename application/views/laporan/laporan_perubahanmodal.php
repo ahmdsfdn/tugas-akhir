@@ -11,9 +11,10 @@
 div { 
  text-align: center;
 }
+.rata-kanan {
+	text-align: right;
+}
 table {
- 
-
   width: 800px;
   border-collapse: collapse;
   margin-left:auto; /* Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
@@ -85,7 +86,7 @@ h3 {
 								  		if ($this->input->post('bulan_post') or $this->input->post('tahun_post') or $this->input->post('tanggal_awal')) {
 								  			
 											
-												$date_sa = $tahun-1;
+												$date_sa = $tahun;
 												$this->db->where('year(tanggal_transaksi)',$date_sa);
 												$this->db->select('SUM(debit) as total');
 												$debit = $this->db->get_where('saldo_awal',['akun' => $td['akun']])->row()->total;
@@ -97,7 +98,7 @@ h3 {
 
 								  		} else {
 
-								  			$date = date('Y')-1;
+								  			$date = date('Y');
 											$this->db->where('year(tanggal_transaksi)',$date);
 								  			$this->db->select('SUM(debit) as total');
 								  			$debit = $this->db->get_where('saldo_awal',['akun' => $td['akun']])->row()->total;
@@ -293,9 +294,9 @@ h3 {
 					  				</td>
 					  				<td>
 					  					<?php if ($pe['akun'] == 'Prive'): ?>
-					  					<h3><?= rupiah($total_pa[$pe['akun']]); ?></h3>
+					  					<h3><?= rupiah_cetak($total_pa[$pe['akun']]); ?></h3>
 					  					<?php else: ?>
-					  					<h3><?= rupiah($total_pa[$pe['akun']] + $total_sa[$pe['akun']]) ; ?></h3>
+					  					<h3><?= rupiah_cetak($total_pa[$pe['akun']] + $total_sa[$pe['akun']]) ; ?></h3>
 					  					<?php endif ?>
 					  					
 					  				</td>
@@ -315,7 +316,7 @@ h3 {
 			  				
 					  						<?php $jumlah_ = array_sum($jumlah); ?>
 				  					
-					  					<h3 class="text-right"><?= rupiah($jumlah_); ?></h3>
+					  					<h3 class="text-right"><?= rupiah_cetak($jumlah_); ?></h3>
 					  				</td>
 					  			</tr>
 					  			<tr>
@@ -324,7 +325,7 @@ h3 {
 					  					<h3 class="text-left">Laba Rugi</h3>
 					  				</td>
 					  				<td>
-					  					<h3 class="text-right"><?= rupiah($total_labarugi); ?></h3>
+					  					<h3 class="text-right"><?= rupiah_cetak($total_labarugi); ?></h3>
 					  				</td>
 					  			</tr>
 					  			<tr>
@@ -333,7 +334,7 @@ h3 {
 					  					<h3 class="text-left">Total Perubahan Modal</h3>
 					  				</td>
 					  				<td style="background-color: #000; color: #fff;font-weight: bold;">
-					  					<h3 class="text-right"><?= rupiah($total_labarugi + $jumlah_); ?></h3>
+					  					<h3 class="text-right"><?= rupiah_cetak($total_labarugi + $jumlah_); ?></h3>
 					  				</td>
 					  			</tr>
 				

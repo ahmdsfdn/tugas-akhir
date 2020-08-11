@@ -271,7 +271,7 @@
 		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_sa = $this->db->get_where('saldo_awal',['akun' => $d['akun']])->result_array(); 
 		
-		$this->db->where('year(tanggal_transaksi)',$tahun_sa + 1);
+		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_kd = $this->db->get_where('transaksi',['akun' => $d['akun']])->result_array(); 
 
 	?>
@@ -414,8 +414,8 @@
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
-						  			<td><?= $date_akhir; ?></td>						 	
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
+						  			<td><?= $t_aw; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
 						  			<td></td>
@@ -860,7 +860,7 @@
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
 						  			<td><?= $tanggal_tabel; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
@@ -1224,7 +1224,7 @@
 		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_sa = $this->db->get_where('saldo_awal',['akun' => $d['akun']])->result_array(); 
 		
-		$this->db->where('year(tanggal_transaksi)',$tahun_sa+1);
+		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_kd = $this->db->get_where('transaksi',['akun' => $d['akun']])->result_array(); 
 	?>
 
@@ -1365,8 +1365,8 @@
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
-						  			<td><?= $date_akhir; ?></td>						 	
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
+						  			<td><?= $t_aw; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
 						  			<td></td>
@@ -1809,7 +1809,7 @@
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
 						  			<td><?= $tanggal_tabel; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
@@ -2170,7 +2170,6 @@
 </div>
 
 </div>
-
 
 
 <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>

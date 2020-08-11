@@ -27,7 +27,7 @@ class Model_pmodal extends CI_Model
 
 				$dt_akhir = date("Y-m-d", strtotime("last day of $date_akhir"));
 
-				$date_sa = $data['tahun']-1;
+				$date_sa = $data['tahun'];
 				$this->db->where('year(tanggal_transaksi)',$date_sa);
 				$this->db->select('SUM(debit) as total');
 				$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
@@ -69,11 +69,11 @@ class Model_pmodal extends CI_Model
 				// debit kredit awal kumulatif
 				$dk_akhir_k = $data['dk_akhir_k'] = $this->input->post('tanggal_akhir');
 
-				$this->db->where('year(tanggal_transaksi)',$tahun-1);
+				$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(debit) as total');
 				$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
-				$this->db->where('year(tanggal_transaksi)',$tahun-1);
+				$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(kredit) as total');
 				$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
@@ -106,11 +106,11 @@ class Model_pmodal extends CI_Model
 				$dk_akhir_k1 = $data['dk_akhir_k1'] = $this->input->post('tanggal_akhir');
 
 					// total saldo awal
-	  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+	  			$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(debit) as total');
 				$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
-				$this->db->where('year(tanggal_transaksi)',$tahun-1);
+				$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(kredit) as total');
 				$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
@@ -157,11 +157,11 @@ class Model_pmodal extends CI_Model
 				$dk_akhir_k1 = $data['dk_akhir_k1'] = $this->input->post('tanggal_akhir');
 
 					// total saldo awal
-	  			$this->db->where('year(tanggal_transaksi)',$tahun-1);
+	  			$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(debit) as total');
 				$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
-				$this->db->where('year(tanggal_transaksi)',$tahun-1);
+				$this->db->where('year(tanggal_transaksi)',$tahun);
 	  			$this->db->select('SUM(kredit) as total');
 				$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
@@ -207,11 +207,37 @@ class Model_pmodal extends CI_Model
 				
 			} else {
 
-				if ($data['bulan'] != 1) {
+				if ($this->input->post('tahun_post')) {
+					$date_sa = $this->input->post('tahun_post');
+					$this->db->where('year(tanggal_transaksi)',$date_sa);
+					$this->db->select('SUM(debit) as total');
+					$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
+			
+					$this->db->where('year(tanggal_transaksi)',$date_sa);
+					$this->db->select('SUM(kredit) as total');
+					$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
 
-					$date_sa = date('Y')-1;
+					$date = $this->input->post('tahun_post');
+					$bulan = $data['bulan'];
+					$this->db->where('year(tanggal_transaksi)',$date);
+					
+					$this->db->select('SUM(debit) as total');
+					$deb = $this->db->get_where('transaksi',['pos_akun' =>$pl['pos_akun']])->row()->total;
+
+					$this->db->where('year(tanggal_transaksi)',$date);
+					
+						$this->db->select('SUM(kredit) as total');
+					$kre = $this->db->get_where('transaksi',['pos_akun' => $pl['pos_akun']])->row()->total;
+
+					$debit = $sa_d + $deb;
+					$kredit = $sa_k + $kre;
+					
+				} else {
+
+					if ($data['bulan'] != 1) {
+
+					$date_sa = date('Y');
 				
-
 					$this->db->where('year(tanggal_transaksi)',$date_sa);
 					$this->db->select('SUM(debit) as total');
 					$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
@@ -238,9 +264,9 @@ class Model_pmodal extends CI_Model
 					$debit = $sa_d + $deb;
 					$kredit = $sa_k + $kre;
 
-				} else {
+					} else {
 
-					$date_sa = date('Y')-1;
+					$date_sa = date('Y');
 					$this->db->where('year(tanggal_transaksi)',$date_sa);
 					$this->db->select('SUM(debit) as total');
 					$sa_d = $this->db->get_where('saldo_awal',['pos_akun' => $pl['pos_akun']])->row()->total;
@@ -263,7 +289,9 @@ class Model_pmodal extends CI_Model
 
 					$debit = $sa_d + $deb;
 					$kredit = $sa_k + $kre;
+					}
 				}
+				
 
 				
 

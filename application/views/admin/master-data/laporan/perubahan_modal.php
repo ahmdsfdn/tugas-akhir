@@ -192,7 +192,7 @@
 									  		if ($this->input->post('bulan_post') or $this->input->post('tahun_post') or $this->input->post('tanggal_awal')) {
 									  			
 												
-													$date_sa = $tahun-1;
+													$date_sa = $tahun;
 													$this->db->where('year(tanggal_transaksi)',$date_sa);
 													$this->db->select('SUM(debit) as total');
 													$debit = $this->db->get_where('saldo_awal',['akun' => $td['akun']])->row()->total;
@@ -204,7 +204,7 @@
 
 									  		} else {
 
-									  			$date = date('Y')-1;
+									  			$date = date('Y');
 												$this->db->where('year(tanggal_transaksi)',$date);
 									  			$this->db->select('SUM(debit) as total');
 									  			$debit = $this->db->get_where('saldo_awal',['akun' => $td['akun']])->row()->total;

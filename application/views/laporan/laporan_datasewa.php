@@ -11,6 +11,10 @@
 div { 
  text-align: center;
 }
+
+.rata-kanan {
+	text-align: right;
+}
 table {
  
 
@@ -117,34 +121,36 @@ h4 {
 			<h2><?= $ket_status[$st]; ?></h2>
 			
 				<table style="margin-top: 10px;" cellspacing="0">
-				  	<tr>
-			   			<th>Kendaraan</th>
-			   			<th>Nama Penyewa</th>
-			   			<th>Tanggal Sewa</th>
-			   			<th>Tanggal Kembali</th>
-			   			<th >Biaya Sewa</th>
-			   			<th>Uang Muka</th>
+			
+					  	<tr style="position: fixed">
+				   			<th>Kendaraan</th>
+				   			<th>Nama Penyewa</th>
+				   			<th>Tanggal Sewa</th>
+				   			<th>Tanggal Kembali</th>
+				   			<th >Biaya Sewa</th>
+				   			<th>Uang Muka</th>
 
-			   			<?php if ($st == 'BL'): ?>
-			   				<!-- TABEL KOSONG -->
-			   				
-			   			<?php else : ?>
-				   			<th >Bayar</th>
-				   			<th>Tanggal Lunas</th>
-			   			<?php endif; ?>
-			   		</tr>
+				   			<?php if ($st == 'BL'): ?>
+				   				<!-- TABEL KOSONG -->
+				   				
+				   			<?php else : ?>
+					   			<th >Bayar</th>
+					   			<th>Tanggal Lunas</th>
+				   			<?php endif; ?>
+				   		</tr>
+			   	
 			   		<?php foreach ($status_sewa as $ss) : ?>
 			   			<tr>
 			   				<td><?= $ss['kendaraan']; ?></td>
 			   				<td><?= $ss['nama_penyewa']; ?></td>
 			   				<td><?= $ss['tgl_sewa']; ?></td>
 			   				<td><?= $ss['tgl_kembali']; ?></td>
-			   				<td><?= rupiah($ss['biaya_sewa']); ?></td>
-			   				<td><?= rupiah($ss['uang_muka']); ?></td>
+			   				<td><?= rupiah_cetak($ss['biaya_sewa']); ?></td>
+			   				<td><?= rupiah_cetak($ss['uang_muka']); ?></td>
 			   				<?php if ($st == 'BL') : ?>
 				   			<!-- TABEL KOSONG -->
 				   			<?php else : ?>
-						   		<td><?= rupiah($ss['bayar']); ?></td>
+						   		<td><?= rupiah_cetak($ss['bayar']); ?></td>
 				   				<td><?= $ss['tgl_lunas']; ?></td>
 				   			<?php endif; ?>
 

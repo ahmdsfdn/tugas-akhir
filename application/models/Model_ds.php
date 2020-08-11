@@ -62,7 +62,7 @@ class Model_ds extends CI_Model
 
 			$index = 0;
 			foreach ($akun as $datakd) { //membuat perulangan berdasarkan kodeakun
-				if ($datakd == 'Piutang Jasa') {
+				if ($datakd == 'Piutang Usaha') {
 					array_push($data_t, array(
 					'kode_akun' => $kode_akun[$index],
 					'keterangan' => "Sewa ".$keterangan[$index],
@@ -97,6 +97,7 @@ class Model_ds extends CI_Model
 			$index++;
 			}
 
+			// print_r($data_t);
 		return $this->db->insert_batch('transaksi', $data_t);
 	}
 
@@ -125,7 +126,7 @@ class Model_ds extends CI_Model
 
 		$data = $this->db->get_where('data_sewa',['id_sewa' => $id_sewa])->row_array();
 		//print_r($data);
-		$tanggal_lunas_post = date("Y-m-d");
+		$tanggal_lunas_post = $this->input->post('tanggal_lunas');
 
 		$data = [
 		"nama_penyewa" => $data['nama_penyewa'],
@@ -148,7 +149,7 @@ class Model_ds extends CI_Model
 
 			$kode_akun = [$data_trans[0]['kode_akun'],$data_trans[1]['kode_akun']];
 			$keterangan = [$data_trans[0]['keterangan'],$data_trans[1]['keterangan']];
-			$tanggal_transaksi = [$data_trans[0]['tanggal_transaksi'] = date('Y-m-d'),$data_trans[1]['tanggal_transaksi'] = date('Y-m-d')];
+			// $tanggal_transaksi = [$data_trans[0]['tanggal_transaksi'] = date('Y-m-d'),$data_trans[1]['tanggal_transaksi'] = date('Y-m-d')];
 			$pos_saldo = [$data_trans[0]['pos_saldo'],$data_trans[1]['pos_saldo']];
 			$pos_laporan = [$data_trans[0]['pos_laporan'],$data_trans[1]['pos_laporan']];
 			$bukti_transaksi = $kodemax;
@@ -165,7 +166,7 @@ class Model_ds extends CI_Model
 					array_push($data_t, array(
 					'kode_akun' => $kode_akun[$index],
 					'keterangan' => $keterangan[$index],
-					'tanggal_transaksi' => $tanggal_transaksi[$index],
+					'tanggal_transaksi' =>  $tanggal_lunas_post,
 					'pos_saldo' => $pos_saldo[$index],
 					'pos_laporan' => $pos_laporan[$index],
 					'bukti_transaksi' => $bukti_transaksi,
@@ -243,7 +244,7 @@ class Model_ds extends CI_Model
 
 			$index = 0;
 			foreach ($akun as $datakd) { //membuat perulangan berdasarkan kodeakun
-				if ($datakd == 'Piutang Jasa') {
+				if ($datakd == 'Piutang Usaha') {
 					array_push($data_t, array(
 					'id' => $id[$index],
 					'kode_akun' => $kode_akun[$index],
@@ -257,6 +258,7 @@ class Model_ds extends CI_Model
 					'kredit' => $kredit[$index],
 					'pos_akun' => $pos_akun[$index],
 					'id_sewa' => $id_sewa,
+					'ref' => 'JU'
 					
 				));
 				} else {
@@ -272,7 +274,8 @@ class Model_ds extends CI_Model
 					'debit' => $debit[$index],
 					'kredit' => $kredit[$index],
 					'pos_akun' => $pos_akun[$index],
-					'id_sewa' => $id_sewa
+					'id_sewa' => $id_sewa,
+					'ref' => 'JU'
 					));
 				}
 				
@@ -333,7 +336,7 @@ class Model_ds extends CI_Model
 
 			$index = 0;
 			foreach ($akun as $datakd) { //membuat perulangan berdasarkan kodeakun
-				if ($datakd == 'Piutang Jasa') {
+				if ($datakd == 'Piutang Usaha') {
 					array_push($data_t, array(
 				
 					'kode_akun' => $kode_akun[$index],
@@ -346,7 +349,8 @@ class Model_ds extends CI_Model
 					'debit' => $kredit[2] - $debit[0],
 					'kredit' => $kredit[$index],
 					'pos_akun' => $pos_akun[$index],
-					'id_sewa' => $id_sewa
+					'id_sewa' => $id_sewa,
+					'ref' => 'JU'
 				));
 				} else {
 					array_push($data_t, array(
@@ -361,7 +365,8 @@ class Model_ds extends CI_Model
 					'debit' => $debit[$index],
 					'kredit' => $kredit[$index],
 					'pos_akun' => $pos_akun[$index],
-					'id_sewa' => $id_sewa
+					'id_sewa' => $id_sewa,
+					'ref' => 'JU'
 					));
 				}
 				
@@ -430,7 +435,8 @@ class Model_ds extends CI_Model
 					'debit' => $debit[$index],
 					'kredit' => $kredit[$index],
 					'pos_akun' => $pos_akun[$index],
-					'id_sewa' => $id_sewa
+					'id_sewa' => $id_sewa,
+					'ref' => 'JU'
 				));
 			$index++;
 			}

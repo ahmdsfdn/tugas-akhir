@@ -11,6 +11,16 @@
 div { 
  /*text-align: center;*/
 }
+
+
+/*.wadah {
+	page-break-inside: avoid !important;
+}*/
+
+.rata-kanan {
+	text-align: right;
+}
+
 table {
  
  
@@ -21,7 +31,7 @@ table {
  /* margin-left:auto;*/  /*Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis*/ 
   /*margin-right:auto;*/  
  /* Sehingga tampilan header website akan berada tepat di tengah-tengah layar monitor*/ 
- 
+
   
 }
 
@@ -49,7 +59,7 @@ table tr {
 
 #header{
 			font-family: Arial, Helvetica, sans-serif;
-			width:900px;  Digunakan untuk mengatur lebar header 
+			width:900px;  /*Digunakan untuk mengatur lebar header */
 			height: 150px;
 			margin-left:auto;  /*Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
 			margin-right:auto; /* Sehingga tampilan header website akan berada tepat di tengah-tengah layar monitor */
@@ -126,7 +136,7 @@ div.wadah{
 		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_sa = $this->db->get_where('saldo_awal',['akun' => $d['akun']])->result_array(); 
 
-		$this->db->where('year(tanggal_transaksi)',$tahun_sa+1);
+		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_kd = $this->db->get_where('transaksi',['akun' => $d['akun']])->result_array(); 
 	?>
 
@@ -244,8 +254,8 @@ div.wadah{
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
-						  			<td><?= $date_akhir; ?></td>						 	
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
+						  			<td><?= $t_aw; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
 						  			<td></td>
@@ -257,7 +267,7 @@ div.wadah{
 						  				$saldo_sa = [$d['akun'] => $saldo_akhir_semua[$d['akun']]];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_akhir_semua[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir_semua[$d['akun']]); ?></td>
 						</tr>
 
 									<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
@@ -287,8 +297,17 @@ div.wadah{
 					  			<td></td>
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -313,7 +332,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -341,8 +360,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php
 
 						  				$debit_bb = $ju['debit'];
@@ -368,7 +387,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -384,7 +403,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir) ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir) ?></td>
 					  	</tr>
 
 
@@ -400,8 +419,7 @@ div.wadah{
 						  		<!-- 	<td><?= $sa['akun'] ?></td> -->
 						  			<!-- <td><?= $sa['kode_akun'] ?></td> -->
 						  			<td></td>
-						  			<td><?= rupiah($sa['debit']) ?></td>
-						  			<td><?= rupiah($sa['kredit']) ?></td>
+						  			<td></td><td></td>
 
 						  				<?php 
 						  			
@@ -410,7 +428,7 @@ div.wadah{
 						  				$saldo_sa  = [$d['akun'] => $kredit_sa - $debit_sa];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_sa[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_sa[$d['akun']]); ?></td>
 						  		</tr>
 						  			<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
 						  	<?php endforeach ?>	
@@ -446,8 +464,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php
 
 					  					
@@ -475,7 +502,7 @@ div.wadah{
 
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -492,7 +519,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir); ?></td>
 					  			</tr>
 			
 			<!-- AKHIR IF OJO LALI ! -->		  		
@@ -592,7 +619,7 @@ div.wadah{
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
 						  			<td><?= $tanggal_tabel; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
@@ -605,7 +632,7 @@ div.wadah{
 						  				$saldo_sa = [$d['akun'] => $saldo_akhir_semua[$d['akun']]];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_akhir_semua[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir_semua[$d['akun']]); ?></td>
 						</tr>
 
 									<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
@@ -632,8 +659,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -658,7 +685,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -684,8 +711,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -710,7 +737,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -726,7 +753,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir) ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir) ?></td>
 					  	</tr>
 
 
@@ -742,8 +769,7 @@ div.wadah{
 						  		<!-- 	<td><?= $sa['akun'] ?></td> -->
 						  			<!-- <td><?= $sa['kode_akun'] ?></td> -->
 						  			<td></td>
-						  			<td><?= rupiah($sa['debit']) ?></td>
-						  			<td><?= rupiah($sa['kredit']) ?></td>
+						  			<td></td><td></td>
 
 						  				<?php 
 						  			
@@ -752,7 +778,7 @@ div.wadah{
 						  				$saldo_sa  = [$d['akun'] => $kredit_sa - $debit_sa];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_sa[$sa['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_sa[$sa['akun']]); ?></td>
 						  		</tr>
 						  			<?php $saldo_akhirawal = $saldo_sa[$sa['akun']]; ?>
 						  	<?php endforeach ?>	
@@ -790,8 +816,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php
 
 					  					
@@ -823,7 +858,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -855,8 +890,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php
 
 					  					
@@ -888,7 +932,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -905,7 +949,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir); ?></td>
 					  			</tr>
 			
 			<!-- AKHIR IF OJO LALI ! -->		  		
@@ -926,7 +970,7 @@ div.wadah{
 		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_sa = $this->db->get_where('saldo_awal',['akun' => $d['akun']])->result_array(); 
 
-		$this->db->where('year(tanggal_transaksi)',$tahun_sa+1);
+		$this->db->where('year(tanggal_transaksi)',$tahun_sa);
 		$data_kd = $this->db->get_where('transaksi',['akun' => $d['akun']])->result_array(); 
 	?>
 
@@ -1045,8 +1089,8 @@ div.wadah{
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
-						  			<td><?= $date_akhir; ?></td>						 	
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
+						  			<td><?= $t_aw; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
 						  			<td></td>
@@ -1058,7 +1102,7 @@ div.wadah{
 						  				$saldo_sa = [$d['akun'] => $saldo_akhir_semua[$d['akun']]];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_akhir_semua[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir_semua[$d['akun']]); ?></td>
 						</tr>
 
 									<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
@@ -1087,8 +1131,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -1113,7 +1157,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -1141,8 +1185,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -1167,7 +1220,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -1183,7 +1236,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir); ?></td>
 					  	</tr>
 
 
@@ -1199,8 +1252,7 @@ div.wadah{
 						  		<!-- 	<td><?= $sa['akun'] ?></td> -->
 						  			<!-- <td><?= $sa['kode_akun'] ?></td> -->
 						  			<td></td>
-						  			<td><?= rupiah($sa['debit']) ?></td>
-						  			<td><?= rupiah($sa['kredit']) ?></td>
+						  			<td></td><td></td>
 
 						  				<?php 
 						  			
@@ -1209,7 +1261,7 @@ div.wadah{
 						  				$saldo_sa  = [$d['akun'] => $debit_sa-$kredit_sa];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_sa[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_sa[$d['akun']]); ?></td>
 						  		</tr>
 						  			<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
 						  	<?php endforeach ?>	
@@ -1242,8 +1294,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php
 
 					  					
@@ -1271,7 +1323,7 @@ div.wadah{
 
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -1299,8 +1351,8 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']) ?></td>
-					  			<td><?= rupiah($ju['kredit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['debit']) ?></td>
+					  			<td><?= rupiah_cetak($ju['kredit']) ?></td>
 					  					<?php
 
 					  					
@@ -1328,7 +1380,7 @@ div.wadah{
 
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -1345,7 +1397,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir) ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir) ?></td>
 					  			</tr>
 			
 			<!-- AKHIR IF OJO LALI ! -->		  		
@@ -1444,7 +1496,7 @@ div.wadah{
 					  	<tr>		
 					  				<?php 
 
-					  				$tanggal_tabel = date("Y-m-d", strtotime("$tgl_awal_data last day of -1 month")); ?>
+					  				$tanggal_tabel = date("Y-m-d", strtotime("first day of $tgl_awal_data")); ?>
 						  			<td><?= $tanggal_tabel; ?></td>						 	
 						  			<td>Saldo Awal</td>
 						  			<td></td>
@@ -1457,7 +1509,7 @@ div.wadah{
 						  				$saldo_sa = [$d['akun'] => $saldo_akhir_semua[$d['akun']]];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_akhir_semua[$d['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir_semua[$d['akun']]); ?></td>
 						</tr>
 
 									<?php $saldo_akhirawal = $saldo_sa[$d['akun']]; ?>
@@ -1486,8 +1538,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -1512,7 +1573,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -1538,8 +1599,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php 
 						  				$debit_bb = $ju['debit'];
 						  				$kredit_bb = $ju['kredit'];
@@ -1564,7 +1634,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  		
 					  		</tr>
 					  		
@@ -1580,7 +1650,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir); ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir); ?></td>
 					  	</tr>
 
 
@@ -1596,8 +1666,7 @@ div.wadah{
 						  		<!-- 	<td><?= $sa['akun'] ?></td> -->
 						  			<!-- <td><?= $sa['kode_akun'] ?></td> -->
 						  			<td></td>
-						  			<td><?= rupiah($sa['debit']) ?></td>
-						  			<td><?= rupiah($sa['kredit']) ?></td>
+						  			<td></td><td></td>
 
 						  				<?php 
 						  			
@@ -1606,7 +1675,7 @@ div.wadah{
 						  				$saldo_sa  = [$d['akun'] => $debit_sa-$kredit_sa];
 						  				
 						  				 ?>
-						  			<td><?= rupiah($saldo_sa[$sa['akun']]); ?></td>
+						  			<td><?= rupiah_cetak($saldo_sa[$sa['akun']]); ?></td>
 						  		</tr>
 						  			<?php $saldo_akhirawal = $saldo_sa[$sa['akun']]; ?>
 						  	<?php endforeach ?>	
@@ -1644,8 +1713,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php
 
 					  					
@@ -1677,7 +1755,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -1710,8 +1788,17 @@ div.wadah{
 					  			<td><?= $ju['ref'] ?></td>	
 					  			<!-- <td><?= $ju['akun'] ?></td> -->
 					  			<!-- <td><?= $ju['kode_akun'] ?></td> -->
-					  			<td><?= rupiah($ju['debit']); ?></td>
-					  			<td><?= rupiah($ju['kredit']); ?></td>
+					  			<?php if ($ju['debit'] == 0): ?>
+									  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['debit']); ?></td>
+								  	<?php endif ?>
+							  		
+							  		<?php if ($ju['kredit'] == 0): ?>
+								  		<td></td>
+								  	<?php else: ?>
+								  		<td><?= rupiah_cetak($ju['kredit']); ?></td>
+								  	<?php endif ?>
 					  					<?php
 
 					  					
@@ -1743,7 +1830,7 @@ div.wadah{
 						  				
 						  				?>
 						  					
-					  			<td><?= rupiah($saldo_bb[$index]); ?></td>
+					  			<td><?= rupiah_cetak($saldo_bb[$index]); ?></td>
 					  			
 					  		</tr>
 					  		
@@ -1760,7 +1847,7 @@ div.wadah{
 						  			<td style="border: 0;"></td>
 						  			<td style="border: 0;"></td>
 						  			<td>Saldo Akhir</td>
-						  			<td><?= rupiah($saldo_akhir) ?></td>
+						  			<td><?= rupiah_cetak($saldo_akhir) ?></td>
 					  			</tr>
 			
 			<!-- AKHIR IF OJO LALI ! -->		  		
@@ -1773,6 +1860,7 @@ div.wadah{
 	</div>
 <?php else: ?>
 <!-- tidak ada transaksi pada saldo awal saldo normal debit -->
+
 <?php endif ?>
 <?php endif ?>
 <?php endforeach; ?>

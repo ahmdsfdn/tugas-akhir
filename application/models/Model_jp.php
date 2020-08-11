@@ -8,6 +8,10 @@ class Model_jp extends CI_Model
 
 	public function tampil_jp()
 	{
+		$month = date('m');
+		$tahun = date('Y');
+		$this->db->where('month(tanggal_transaksi)',$month);
+		$this->db->where('year(tanggal_transaksi)',$tahun);
 		return $this->db->get_where('transaksi',['ref' => 'JP'])->result_array();
 	}
 
@@ -102,8 +106,8 @@ class Model_jp extends CI_Model
 		} else {
 			$month = date('m');
 			$tahun = date('Y');
+				$this->db->where('month(tanggal_transaksi)',$month);
 			$this->db->where('year(tanggal_transaksi)',$tahun);
-			$this->db->where('month(tanggal_transaksi)',$month);
 			$this->db->select('SUM(debit) as total');
 			return $this->db->get_where('transaksi',['ref' => 'JP'])->row()->total;
 		}
@@ -159,8 +163,8 @@ class Model_jp extends CI_Model
 
 		$month = date('m');
 		$tahun = date('Y');
-		$this->db->where('year(tanggal_transaksi)',$tahun);
 		$this->db->where('month(tanggal_transaksi)',$month);
+		$this->db->where('year(tanggal_transaksi)',$tahun);
 		$this->db->select('SUM(kredit) as total');
 		return $this->db->get_where('transaksi',['ref' => 'JP'])->row()->total;
 

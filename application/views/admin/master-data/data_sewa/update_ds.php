@@ -257,9 +257,9 @@
 					
 					<fieldset id="form_p" hidden>
 						
-						<!-- piutang jasa -->
+						<!-- piutang usaha -->
 						<input type="text" name="id[]" id="id" value="<?= $d_trans[1]['id']; ?>">
-						<input type="text" name="akun[]" id="akun_piutang" value="Piutang Jasa">
+						<input type="text" name="akun[]" id="akun_piutang" value="Piutang Usaha">
 						<button type="button" hidden id="ubah_piutang">ubah</button>
 						<input type="text" name="keterangan[]" id="keterangan_piutang" value="">
 						<input type="text" name="tanggal_transaksi[]" id="tanggal_transaksi_piutang" value="">
@@ -314,9 +314,9 @@
 
 					<fieldset id="form_p" hidden>
 						
-						<!-- piutang jasa -->
+						<!-- Piutang Usaha -->
 						<input type="text" name="id[]" id="id" value="<?= $d_trans[4]['id']; ?>">
-						<input type="text" name="akun[]" id="akun_piutang" value="Piutang Jasa">
+						<input type="text" name="akun[]" id="akun_piutang" value="Piutang Usaha">
 						<button type="button" hidden id="ubah_piutang">ubah</button>
 						<input type="text" name="keterangan[]" id="keterangan_piutang" value="">
 						<input type="text" name="tanggal_transaksi[]" id="tanggal_transaksi_piutang" value="">
@@ -351,9 +351,9 @@
 				
 				<fieldset id="form_piutang" disabled hidden>
 					
-					<!-- piutang jasa -->
+					<!-- Piutang Usaha -->
 					<input type="text" name="id[]" id="id" value="">
-					<input type="text" name="akun[]" id="akun_piutang" value="Piutang Jasa">
+					<input type="text" name="akun[]" id="akun_piutang" value="Piutang Usaha">
 					<button type="button" hidden id="ubah_piutang">ubah</button>
 					<input type="text" name="keterangan[]" id="keterangan_piutang" value="">
 					<input type="text" name="tanggal_transaksi[]" id="tanggal_transaksi_piutang" value="">
@@ -406,9 +406,9 @@
 				
 				<fieldset id="form_piutang" disabled hidden>
 					
-					<!-- piutang jasa -->
+					<!-- Piutang Usaha -->
 					<input type="text" name="id[]" id="id" value="<?= $d_trans[1]['id']; ?>">
-					<input type="text" name="akun[]" id="akun_piutang" value="Piutang Jasa">
+					<input type="text" name="akun[]" id="akun_piutang" value="Piutang Usaha">
 					<button type="button" hidden id="ubah_piutang">ubah</button>
 					<input type="text" name="keterangan[]" id="keterangan_piutang" value="">
 					<input type="text" name="tanggal_transaksi[]" id="tanggal_transaksi_piutang" value="">

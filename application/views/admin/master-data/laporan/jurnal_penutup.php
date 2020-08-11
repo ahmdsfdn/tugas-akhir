@@ -7,7 +7,7 @@
 				<div class="col">
 					<div class="row">
 						<div class="col  text-center">
-							<h3 class="font-weight-bold">Laba Rugi</h3>
+							<h3 class="font-weight-bold">Jurnal Penutup</h3>
 						</div>
 					</div>
 					<div class="row">
@@ -19,7 +19,7 @@
 							<?php elseif ($this->input->post('tahun_post')) : ?>
 								<h5><?=  "Tahun ".$tahun; ?></h5>
 							<?php else: ?>
-								<h5><?= $nama_bulan?> <?= $tahun ?></h5>
+								<h5>Tahun <?= $tahun ?></h5>
 							<?php endif ?>
 						</div>
 						
@@ -27,18 +27,11 @@
 				</div>
 			</div>
 		<hr class="m-0 mb-2">
-			<div class="row mb-2">
-				<?php if ($user['role_id'] == 2): ?>
-				<div class="col-12 col-md-4 col-xl-3">
-					<a role="button" href="<?= base_url();?>admin/transaksi_m" class="btn btn-success" style="height: 100%; width: 100%;">Tambah Data</a>
-				</div>
-				<div class="mt-2 mt-md-0 col-6 col-md-3 col-xl-2">
-				<?php else: ?>
-				<div class="mt-2 mt-md-0 col-6 col-md-6 col-xl-2">	
-				<?php endif ?>
+			
+	<div class="row">
+		<div class="mt-2 mt-md-0 col-6 col-md-6 col-xl-2">	
 				
-				
-					<form method="post" action="<?= base_url();?>labarugi/cetak_lr">
+					<form method="post" action="<?= base_url();?>labarugi/cetak_penutup">
 				  					<!-- <input type="text" name="akun" id="akun" value="" hidden> -->
 				  					<?php if ($this->input->post('tanggal_awal') && $this->input->post('akun')) : ?>
 				  						<input type="text" name="tanggal_awal" value="<?= $t_aw; ?>" hidden>
@@ -72,64 +65,9 @@
 									<?php endif ?>
 		  			<button type="submit" class="btn btn-warning" style=""><i class="fa fa-file-pdf mr-1 d-none d-sm-inline"></i>Cetak</button>
 		  			</form>
-				</div>
-				
-				<div class="mt-2 mt-md-0 col-6 col-md-2 col-xl-1 ">
-					 <a class="btn btn-success" href="<?= base_url();?>labarugi">Reset</a>
-				</div>
-				<?php if ($user['role_id'] == 1 ): ?>
-				<div class="col-xl-3"></div>	
-				<?php endif ?>
-			</div>
-	
-				<div class="row">
+				</div>			
 		<div class="col-12 col-xl-6">
-			<form method="post" class="form-row align-items-center">
-				<div class="col-12 col-sm-5 mb-2 mb-xl-0">
-						<div class="form">
-						    <input type="date" class="form-control" name="tanggal_awal" value="<?= $this->input->post('tanggal_awal') ?>">
-						</div>
-				</div>
-				<div class="d-none d-sm-block" style="width: 27px;">
-				s/d
-				</div>
-				<div class="col-12 col-sm-5 mb-2 mb-xl-0">
-					  	<div class="form">
-					    	<input type="date" class="form-control" name="tanggal_akhir" value="<?= $this->input->post('tanggal_akhir') ?>">
-					  	</div>
-				</div>
-				<div class="col mb-2 mb-xl-0">
-					 	<div class="form ">
-					  		<button type="submit" class="btn btn-success"><i class="fa fa-search"></i></button>
-					  	</div>
-				</div>
-							  
-			</form> 
-		</div>
-		<div class="col-12 col-xl-6">
-			<form action="" method="post" class="form-row align-items-center">
-						<div class="col-10 mb-2 mb-sm-0 col-sm-5">
-							<div class="form">
-								<select class="custom-select" id="bulan_post" name="bulan_post" disabled>
-								    <option selected>Pilih Bulan</option>
-								<?php foreach ($dd_bulan as $dd_bulan): ?>
-									<?php if ($dd_bulan['angka'] == $this->input->post('bulan_post')): ?>
-										<option value="<?= $dd_bulan['angka'] ?>" selected><?= $dd_bulan['bulan'] ?></option>
-									<?php else: ?>
-										<option value="<?= $dd_bulan['angka'] ?>"><?= $dd_bulan['bulan'] ?></option>
-									<?php endif ?>
-								<?php endforeach ?>
-								   
-						  		</select>
-							</div>									    			
-						</div>
-				
-		          		<div class=""  style="width: 27px;">
-	          				<div class="form-check mb-4">
-							  <input class="form-check-input" type="checkbox" value="" id="enable_bulan">
-							</div>
-						</div>	
-										  	
+			<form action="" method="post" class="form-row align-items-center">										  	
 						<div class="col-12 col-sm-5">
 							<div class="form ">
 					
@@ -328,10 +266,7 @@
 									}
 
 								
-								if ($pa_n['akun'] == 'Beban Pajak') {
-									$jumlah_pajak = $kredit-$debit;
-				
-								}
+
 						  	 ?>
 						<?php endforeach; ?>
 		
@@ -340,27 +275,81 @@
 					  		$tampil = $this->db->get_where('daftar_akun',['pos_akun' => $pa])->result_array();
 					  	?>
 					  	<tbody>
-					  		<!-- MENAMPILKAN DATA TOTAL PER AKUN -->
-					  		<?php foreach ($tampil as $tp): ?>
-							<tr>
-									<td><?= $tp['kode_akun']; ?></td>
-									<td><?= $tp['akun']; ?></td>
-									<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+					  		<?php if ($pa == 'Beban'): ?>
+					  			<tr>
 									<td></td>
-							</tr>
-							<?php endforeach ?>
-							<tr style="background-color: #D7ECD9";>
-									<td></td>
-									<td></td>
-									<td>Jumlah Total</td>
-									<!-- MENGINISIASI BAHWA TOT PERPOS HARUS 0 JIKA TIDAK ADA DATA -->
+									<td>Ikhtisar Laba Rugi</td>
+									
 									<?php if (!empty($tot_perpos[$pa])): ?>
+									
 										<td><?= rupiah($tot_perpos[$pa]); ?></td>
+										<td></td>	
+										
+										
 									<?php else: ?>
 										<td><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										<td></td>
 									<?php endif ?>
 									
-							</tr>
+								</tr>
+					  			<?php foreach ($tampil as $tp): ?>
+								<tr>
+										<td><?= $tp['kode_akun']; ?></td>
+										<td><?= $tp['akun']; ?></td>
+										<?php if ($pa == 'Beban'): ?>	
+											<td></td>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+										<?php else: ?>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+											<td></td>
+										<?php endif ?>
+										
+								</tr>
+								<?php endforeach ?>
+								
+					  		<?php else: ?>
+					  			<?php foreach ($tampil as $tp): ?>
+								<tr>
+										<td><?= $tp['kode_akun']; ?></td>
+										<td><?= $tp['akun']; ?></td>
+										<?php if ($pa == 'Beban'): ?>	
+											<td></td>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+										<?php else: ?>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+											<td></td>
+										<?php endif ?>
+										
+								</tr>
+								<?php endforeach ?>
+								<?php if ($pa == 'Saldo Laba'): ?>
+									<?php $tot_perpos[$pa] = 0 ?>
+								<?php else: ?>
+									<tr>
+									<td></td>
+									
+										<td>Ikhtisar Laba Rugi</td>
+								
+									
+									<?php if (!empty($tot_perpos[$pa])): ?>
+									
+										
+										<td></td>	
+										<td><?= rupiah($tot_perpos[$pa]); ?></td>
+										
+									<?php else: ?>
+										
+											<td></td>	
+											<td><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										
+										
+									<?php endif ?>
+									
+								</tr>
+								<?php endif ?>
+					  			
+					  		<?php endif ?>
+					  		
 					  	</tbody>
 					  	<?php $total_akhir[$pa] =  $tot_perpos[$pa] ;?>
 
@@ -506,13 +495,13 @@
 								$sa_k = $this->db->get_where('saldo_awal',['akun' => $pa_n['akun']])->row()->total;
 
 						  		$this->db->where('year(tanggal_transaksi)',$tahun);
-								$this->db->where('month(tanggal_transaksi)',$bulan);
+								// $this->db->where('month(tanggal_transaksi)',$bulan);
 						  		$this->db->select('SUM(debit) as total');
 								$deb = $this->db->get_where('transaksi',['akun' => $pa_n['akun']])->row()->total;
 
 								// $date = date('Y');
 								$this->db->where('year(tanggal_transaksi)',$tahun);
-								$this->db->where('month(tanggal_transaksi)',$bulan);
+								// $this->db->where('month(tanggal_transaksi)',$bulan);
 								$this->db->select('SUM(kredit) as total');
 								$kre = $this->db->get_where('transaksi',['akun' => $pa_n['akun']])->row()->total;
 
@@ -526,10 +515,6 @@
 										$tot_pos[$pa_n['akun']] =  $debit - $kredit  ;
 									}	
 
-								if ($pa_n['akun'] == 'Beban Pajak') {
-									$jumlah_pajak = $kredit-$debit;
-				
-								}
 						  	 ?>
 						<?php endforeach; ?>
 
@@ -657,13 +642,13 @@
 								$sa_k = $this->db->get_where('saldo_awal',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
 						  		$this->db->where('year(tanggal_transaksi)',$tahun);
-								$this->db->where('month(tanggal_transaksi)',$bulan);
+								// $this->db->where('month(tanggal_transaksi)',$bulan);
 						  		$this->db->select('SUM(debit) as total');
 								$deb = $this->db->get_where('transaksi',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
 								// $date = date('Y');
 								$this->db->where('year(tanggal_transaksi)',$tahun);
-								$this->db->where('month(tanggal_transaksi)',$bulan);
+								// $this->db->where('month(tanggal_transaksi)',$bulan);
 								$this->db->select('SUM(kredit) as total');
 								$kre = $this->db->get_where('transaksi',['pos_akun' => $pa_n['pos_akun']])->row()->total;
 
@@ -685,49 +670,125 @@
 					  		$tampil = $this->db->get_where('daftar_akun',['pos_akun' => $pa])->result_array();
 					  	?>
 					  	<tbody>
-					  		<?php foreach ($tampil as $tp): ?>
-							<tr>
-									<td><?= $tp['kode_akun']; ?></td>
-									<td><?= $tp['akun']; ?></td>
-									<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+					  		<?php if ($pa == 'Beban'): ?>
+					  			<tr>
 									<td></td>
-							</tr>
-							<?php endforeach ?>
-							<tr style="background-color: #D7ECD9";>
-									<td></td>
-									<td></td>
-									<td>Jumlah Total</td>
+									<td>Ikhtisar Laba Rugi</td>
+									
 									<?php if (!empty($tot_perpos[$pa])): ?>
+									
 										<td><?= rupiah($tot_perpos[$pa]); ?></td>
+										<td></td>	
+										
+										
 									<?php else: ?>
 										<td><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										<td></td>
 									<?php endif ?>
 									
-							</tr>
+								</tr>
+					  			<?php foreach ($tampil as $tp): ?>
+								<tr>
+										<td><?= $tp['kode_akun']; ?></td>
+										<td><?= $tp['akun']; ?></td>
+										<?php if ($pa == 'Beban'): ?>	
+											<td></td>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+										<?php else: ?>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+											<td></td>
+										<?php endif ?>
+										
+								</tr>
+								<?php endforeach ?>
+								
+					  		<?php else: ?>
+					  			<?php foreach ($tampil as $tp): ?>
+								<tr>
+										<td><?= $tp['kode_akun']; ?></td>
+										<td><?= $tp['akun']; ?></td>
+										<?php if ($pa == 'Beban'): ?>	
+											<td></td>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+										<?php else: ?>
+											<td><?= rupiah($tot_pos[$tp['akun']]); ?></td>
+											<td></td>
+										<?php endif ?>
+										
+								</tr>
+								<?php endforeach ?>
+								<?php if ($pa == 'Saldo Laba'): ?>
+									<?php $tot_perpos[$pa] = 0 ?>
+								<?php else: ?>
+									<tr>
+									<td></td>
+									
+										<td>Ikhtisar Laba Rugi</td>
+								
+									
+									<?php if (!empty($tot_perpos[$pa])): ?>
+									
+										
+										<td></td>	
+										<td><?= rupiah($tot_perpos[$pa]); ?></td>
+										
+									<?php else: ?>
+										
+											<td></td>	
+											<td><?= rupiah($tot_perpos[$pa] = 0); ?></td>
+										
+										
+									<?php endif ?>
+									
+								</tr>
+								<?php endif ?>
+					  			
+					  		<?php endif ?>
+					  		
+							
 					  	</tbody>
 					  	<?php $total_akhir[$pa] =  $tot_perpos[$pa] ;?>
 
 					<?php endforeach ?>
 			<?php endif ?>
+			
 						<tbody>
-							<?php  
-							$saldo_laba = $total_akhir['Pendapatan'] - $total_akhir['Beban']  ?>
+							
 							<?php  
 							//$saldo_laba = $total_akhir['Pendapatan'] - $total_akhir['Beban'] - $total_akhir['Pajak']; ?>
-							<tr class="bg-dark text-white" >
-									<td style="border: 0px;"></td>
-									<?php if (!empty($jumlah_pajak)): ?>
-										<td style="border: 0px;">Laba Bersih Setelah Pajak</td>
-									
-									<?php else: ?>
-										<td style="border: 0px;">Laba Bersih</td>
-									
-									<?php endif ?>
-									
-									<td style="border: 0px;"></td>
-									<td><?= rupiah($saldo_laba); ?></td>
-									
-							</tr>
+							<?php  
+							$saldo_laba = $total_akhir['Pendapatan'] - $total_akhir['Beban']; ?>
+							<?php if ($saldo_laba > 0): ?>
+								
+								<tr>
+										<td></td>
+										<td>Ikhtisar Laba Rugi</td>
+										<td><?= rupiah($saldo_laba); ?></td>
+										<td></td>
+								</tr>
+								<tr>
+										<td></td>
+										<td>Saldo Laba</td>
+										<td></td>
+										<td><?= rupiah($saldo_laba); ?></td>
+										
+								</tr>
+							<?php else: ?>
+								<tr>
+										<td></td>
+										<td>Saldo Laba</td>
+										<td><?= rupiah($saldo_laba * -1); ?></td>
+										<td></td>
+										
+								</tr>
+								<tr>
+										<td></td>
+										<td>Ikhtisar Laba Rugi</td>
+										<td></td>
+										<td><?= rupiah($saldo_laba * -1); ?></td>
+								</tr>
+							<?php endif ?>
+								
 						</tbody>
 					  </table>
 				</div>

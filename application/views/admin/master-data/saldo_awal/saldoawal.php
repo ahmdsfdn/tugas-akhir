@@ -65,10 +65,14 @@
 
 <?php if (!empty($data_da)): ?>
 
+<!-- Penghitungan selsisih dan total debit kredit -->
+
+
+<!-- end penghitungan -->
 <?php foreach ($data_da as $d) : ?>
 
 	
-		<?php 	$data_tb = $this->db->get_where('saldo_awal',['akun' => $d])->result_array(); ?>
+		<?php $data_tb = $this->db->get_where('saldo_awal',['akun' => $d])->result_array(); ?>
 <?php if (!empty($data_tb)): ?>
 
     <div class="row mb-2 justify-content-center">
@@ -95,6 +99,7 @@
 							  	<?php if ($data_count == 0): ?>
 							  				<?php $hide = ""; ?>
 								<?php else : ?>
+									
 									<?php foreach($data_tb as $dt) : ?>
 										<?php $hide = "hidden"; ?>
 									 	<tr>
@@ -108,13 +113,14 @@
 						  					<a href="<?= base_url(); ?>master/hapusSaldoAwal/<?= $dt['id'];?>" class="badge badge-danger ml-1">Hapus</a>
 						  					</td>
 									  	</tr>
-	
+										
 								 	<?php endforeach; ?>
 								 <?php endif ?>
 
 							  	</tbody>
 
 							  </table>
+							  
 							  <h5 <?= $hide; ?> >Data Belum Ada</h5>
 						</div>
 					</div>
@@ -128,8 +134,7 @@
 
 <?php endforeach; ?>
 
-
-
+<!--   -->
 
 <?php else: ?>
 	<div class="row mt-5">
@@ -138,3 +143,7 @@
 <?php endif ?>
 
 </div>
+
+<script type="text/javascript">
+
+</script>

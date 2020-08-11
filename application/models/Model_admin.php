@@ -20,6 +20,7 @@ class Model_admin extends CI_Model
 		return $this->db->get_where('transaksi',['bukti_transaksi' => $bukti_transaksi])->result_array();
 	}
 
+	// Tidak Terpakai 
 	public function tambahTransaksi()
 	{	
 
@@ -57,6 +58,7 @@ class Model_admin extends CI_Model
 		$this->db->delete('transaksi',['bukti_transaksi' => $bukti_transaksi]);
 	}
 
+	// Tidak Terpakai
 	public function ubahTransaksi()
 	{	
 

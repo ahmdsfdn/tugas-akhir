@@ -11,6 +11,11 @@
 div { 
  text-align: center;
 }
+
+.rata-kanan {
+	text-align: right;
+}
+
 table {
  
 
@@ -139,12 +144,12 @@ h4 {
 			   				<td><?= $ss['nama_penyewa']; ?></td>
 			   				<td><?= $ss['tgl_sewa']; ?></td>
 			   				<td><?= $ss['tgl_kembali']; ?></td>
-			   				<td><?= rupiah($ss['biaya_sewa']); ?></td>
-			   				<td><?= rupiah($ss['uang_muka']); ?></td>
+			   				<td><?= rupiah_cetak($ss['biaya_sewa']); ?></td>
+			   				<td><?= rupiah_cetak($ss['uang_muka']); ?></td>
 			   				<?php if ($st == 'BL') : ?>
 				   			<!-- TABEL KOSONG -->
 				   			<?php else : ?>
-						   		<td><?= rupiah($ss['bayar']); ?></td>
+						   		<td><?= rupiah_cetak($ss['bayar']); ?></td>
 				   				<td><?= $ss['tgl_lunas']; ?></td>
 				   			<?php endif; ?>
 

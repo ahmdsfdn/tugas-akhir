@@ -213,7 +213,7 @@
 										// Bulan INI
 										// SALDO AWAL
 										// MENJUMLAH NOMINAL DARI SETIAP AKUN MENURUT POS AKUN
-											$date = $tahun-1;
+											$date = $tahun;
 											// $month = date('m');
 											$this->db->where('year(tanggal_transaksi)',$date);
 											// $this->db->where('month(tanggal_transaksi)',$month);
@@ -363,16 +363,28 @@
 
 												} else {
 
-												
-													$this->db->where('year(tanggal_transaksi)',$tahun);
-													$this->db->where('month(tanggal_transaksi)',$bulan);
-													$this->db->select('SUM(debit) as total');
-													$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													if ($this->input->post('tahun_post')) {
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														
+														$this->db->select('SUM(debit) as total');
+														$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
 
-													$this->db->where('year(tanggal_transaksi)',$tahun);
-													$this->db->where('month(tanggal_transaksi)',$bulan);
-													$this->db->select('SUM(kredit) as total');
-													$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														
+														$this->db->select('SUM(kredit) as total');
+														$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													} else {
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														$this->db->where('month(tanggal_transaksi)',$bulan);
+														$this->db->select('SUM(debit) as total');
+														$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														$this->db->where('month(tanggal_transaksi)',$bulan);
+														$this->db->select('SUM(kredit) as total');
+														$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													}
+													
 												}
 												
 
@@ -440,7 +452,7 @@
 										// Bulan INI
 										// MENJUMLAH NOMINAL DARI SETIAP AKUN MENURUT POS AKUN
 
-												$date = $tahun - 1;
+												$date = $tahun;
 												$this->db->where('year(tanggal_transaksi)',$date);
 												// $this->db->where('month(tanggal_transaksi)',$month);
 												$this->db->select('SUM(debit) as total');
@@ -594,16 +606,28 @@
 
 												} else {
 
-												
-													$this->db->where('year(tanggal_transaksi)',$tahun);
-													$this->db->where('month(tanggal_transaksi)',$bulan);
-													$this->db->select('SUM(debit) as total');
-													$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													if ($this->input->post('tahun_post')) {
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+													
+														$this->db->select('SUM(debit) as total');
+														$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
 
-													$this->db->where('year(tanggal_transaksi)',$tahun);
-													$this->db->where('month(tanggal_transaksi)',$bulan);
-													$this->db->select('SUM(kredit) as total');
-													$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														
+														$this->db->select('SUM(kredit) as total');
+														$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													} else {
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														$this->db->where('month(tanggal_transaksi)',$bulan);
+														$this->db->select('SUM(debit) as total');
+														$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+
+														$this->db->where('year(tanggal_transaksi)',$tahun);
+														$this->db->where('month(tanggal_transaksi)',$bulan);
+														$this->db->select('SUM(kredit) as total');
+														$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													}								
+
 												}
 												
 
@@ -634,7 +658,7 @@
 						  				<?php else: ?>	
 						  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
 						  				<?php endif ?> -->
-						  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+					  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
 						  				
 						  		
 									</tr>
@@ -644,18 +668,28 @@
 							  	<?php endforeach ?>
 							  		
 								<?php if ($a_pos == 'Ekuitas'): ?>
+									<?php foreach ($klasifikasi_posakun as $al): ?>
 
-									<!-- <tr>
+							  		<tr>	
+						  				<td><?= $al['kode_akun'];?></td>
+						  				<td><?= $al['akun'];?></td>
+					  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+						  		
+									</tr>
+
+									
+							  	<?php endforeach ?>
+									<tr>
 											<td></td>
 											<td>Laba Rugi</td>
 											<td><?= rupiah($lr); ?></td>
-									</tr> -->
+									</tr>
 
-									<tr>
+									<!-- <tr>
 					  					<td></td>
 					  					<td>Perubahan Modal</td>
 					  					<td><?= rupiah(array_sum($total) + array_sum($total_saek) + $lr); ?></td>
-					  				</tr>
+					  				</tr> -->
 
 									<tr>
 											<td></td>

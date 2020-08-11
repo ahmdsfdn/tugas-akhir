@@ -292,9 +292,9 @@ class Model_master extends CI_Model
 
 	public function tambah_saldoawal()
 	{		
-			$date_now = date($this->input->post('tahun').'-12-d');
+			$date_now = date($this->input->post('tahun').'-01-d');
 
-			$tgl_post = date("Y-m-d", strtotime("last day of $date_now "));
+			$tgl_post = date("Y-m-d", strtotime("first day of $date_now "));
 
 			$data = [
 			"kode_akun" =>$this->input->post('kode_akun',true),
@@ -323,9 +323,9 @@ class Model_master extends CI_Model
 
 	public function ubahSaldoAwal()
 	{		
-			$date_now = date($this->input->post('tahun').'-12-d');
+			$date_now = date($this->input->post('tahun').'-01-d');
 			
-			$tgl_post = date("Y-m-d", strtotime("last day of $date_now "));
+			$tgl_post = date("Y-m-d", strtotime("first day of $date_now "));
 
 			$data = [
 			"id" => $this->input->post('id', true),
@@ -349,6 +349,7 @@ class Model_master extends CI_Model
 	{
 		return $this->db->get_where('saldo_awal',['id' => $id])->row_array();
 	}
+
 
 	public function kas(){
 		if ($this->input->post('tanggal_awal')) {

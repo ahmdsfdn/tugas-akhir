@@ -292,4 +292,5 @@ class Poskeu extends CI_Controller {
 		$this->dompdf->render();
 		$this->dompdf->stream("laporan_posisikeuangan.pdf", array('Attachment' => 0));
 	}
+
 }

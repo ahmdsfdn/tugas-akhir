@@ -291,10 +291,13 @@
 					  			<?php if (!empty($totaljp_d)): ?>
 						  			<td><?= rupiah($total_debit); ?></td>
 						  			<td><?= rupiah($total_kredit); ?></td>
+						  			<?php //echo 'iki' ?>
 					  			<?php else: ?>
 						  			<td><?= rupiah($total_debit) ;?></td>
 						  			<td><?= rupiah($total_kredit) ; ?></td>	
+						  			<?php //echo 'ik2i' ?>
 					  			<?php endif ?>
+
 					  			<?php if ($user['role_id'] == 2): ?>
 					  				<td style="border-bottom: 0px; border-left: 0px;border-right: 0px;"></td>
 					  			<?php endif ?>

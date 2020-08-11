@@ -62,7 +62,7 @@ class Buku_besar extends CI_Controller {
 					// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 				$bulan2 = $bulan - 1;
 				$data['tahun_sa1'] = $tahun;
-				$data['tahun_sa'] = $tahun-1;
+				$data['tahun_sa'] = $tahun;
 				$data['tahun_sa2'] = $tahun-1;
 
 					// $date_now = date($tahun."-".$bulan."-d");
@@ -85,7 +85,7 @@ class Buku_besar extends CI_Controller {
 					$date_now = date($tahun."-".$bulan."-d");
 
 					$data['tahun_sa1'] = $tahun;
-					$data['tahun_sa'] = $data['tahun']-1;
+					$data['tahun_sa'] = $data['tahun'];
 
 					$data['date_awal'] = date($tahun."-".$bulan."-01");
 					$data['date_akhir'] = date($tahun."-01-31");
@@ -110,7 +110,7 @@ class Buku_besar extends CI_Controller {
 					// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 				$bulan2 = $bulan - 1;
 
-				$data['tahun_sa'] = $tahun-1;
+				$data['tahun_sa'] = $tahun;
 
 					$date_now = date($tahun."-".$bulan."-d");
 					// echo "$tgl";
@@ -124,7 +124,7 @@ class Buku_besar extends CI_Controller {
 			} else
 			{
 					$date_now = date($tahun."-".$bulan."-d");
-					$data['tahun_sa'] = $tahun-1;
+					$data['tahun_sa'] = $tahun;
 
 					$data['date_awal'] = date($tahun."-".$bulan."-01");
 					$data['date_akhir'] = date($tahun."-01-31");
@@ -143,7 +143,7 @@ class Buku_besar extends CI_Controller {
 					$bulan = 1;
 					$tahun = $this->input->post('tahun_post');
 
-					$data['tahun_sa'] = $tahun-1;
+					$data['tahun_sa'] = $tahun;
 
 					$date_now = date($tahun."-".$bulan."-d");
 					$data['nama_bulan']= 'Tahun';
@@ -171,7 +171,7 @@ class Buku_besar extends CI_Controller {
 								// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 							$bulan2 = $bulan - 1;
 
-							$data['tahun_sa'] = $tahun-1;
+							$data['tahun_sa'] = $tahun;
 
 								$date_now = date("Y-".$bulan."-d");
 								// echo "$tgl";
@@ -185,7 +185,7 @@ class Buku_besar extends CI_Controller {
 						} else
 						{		
 								$date_now = date("Y-".$bulan."-d");
-								$data['tahun_sa'] = $data['tahun']-1;
+								$data['tahun_sa'] = $data['tahun'];
 
 								$data['date_awal'] = date("Y-".$bulan."-01");
 								$data['date_akhir'] = date("Y-01-31");
@@ -215,7 +215,7 @@ class Buku_besar extends CI_Controller {
 		$data['bukber'] = $this->db->get_where('daftar_akun',['akun'])->result_array();
 		// AWAL DARI SEMUA INI
 
-			if ($this->input->post('tanggal_awal')) {
+		if ($this->input->post('tanggal_awal')) {
 			
 		$t_aw = $this->input->post('tanggal_awal');
 		$t_ak = $this->input->post('tanggal_akhir');
@@ -243,7 +243,7 @@ class Buku_besar extends CI_Controller {
 					// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 				$bulan2 = $bulan - 1;
 				$data['tahun_sa1'] = $tahun;
-				$data['tahun_sa'] = $tahun-1;
+				$data['tahun_sa'] = $tahun;
 				$data['tahun_sa2'] = $tahun-1;
 
 					// $date_now = date($tahun."-".$bulan."-d");
@@ -266,7 +266,7 @@ class Buku_besar extends CI_Controller {
 					$date_now = date($tahun."-".$bulan."-d");
 
 					$data['tahun_sa1'] = $tahun;
-					$data['tahun_sa'] = $data['tahun']-1;
+					$data['tahun_sa'] = $data['tahun'];
 
 					$data['date_awal'] = date($tahun."-".$bulan."-01");
 					$data['date_akhir'] = date($tahun."-01-31");
@@ -291,7 +291,7 @@ class Buku_besar extends CI_Controller {
 					// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 				$bulan2 = $bulan - 1;
 
-				$data['tahun_sa'] = $tahun-1;
+				$data['tahun_sa'] = $tahun;
 
 					$date_now = date($tahun."-".$bulan."-d");
 					// echo "$tgl";
@@ -305,7 +305,7 @@ class Buku_besar extends CI_Controller {
 			} else
 			{
 					$date_now = date($tahun."-".$bulan."-d");
-					$data['tahun_sa'] = $tahun-1;
+					$data['tahun_sa'] = $tahun;
 
 					$data['date_awal'] = date($tahun."-".$bulan."-01");
 					$data['date_akhir'] = date($tahun."-01-31");
@@ -324,7 +324,7 @@ class Buku_besar extends CI_Controller {
 					$bulan = 1;
 					$tahun = $this->input->post('tahun_post');
 
-					$data['tahun_sa'] = $tahun-1;
+					$data['tahun_sa'] = $tahun;
 
 					$date_now = date($tahun."-".$bulan."-d");
 					$data['nama_bulan']= 'Tahun';
@@ -352,7 +352,7 @@ class Buku_besar extends CI_Controller {
 								// $tgl = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
 							$bulan2 = $bulan - 1;
 
-							$data['tahun_sa'] = $tahun-1;
+							$data['tahun_sa'] = $tahun;
 
 								$date_now = date("Y-".$bulan."-d");
 								// echo "$tgl";
@@ -366,7 +366,7 @@ class Buku_besar extends CI_Controller {
 						} else
 						{		
 								$date_now = date("Y-".$bulan."-d");
-								$data['tahun_sa'] = $data['tahun']-1;
+								$data['tahun_sa'] = $data['tahun'];
 
 								$data['date_awal'] = date("Y-".$bulan."-01");
 								$data['date_akhir'] = date("Y-01-31");

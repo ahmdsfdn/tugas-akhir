@@ -30,7 +30,7 @@
 					<?php elseif ($this->input->post('bulan_post') && $this->input->post('tahun_post')) :?>
 					<h5><?= $nama_bulan?> <?= $tahun_post ?></h5>
 					<?php elseif ($this->input->post('tahun_post')): ?>
-						<h5>Tahun <?= $tahun_post ?></h5>
+						<h5>Tahun <?= $this->input->post('tahun_post') ?></h5>
 					<?php else: ?>
 						<h5><?= $nama_bulan?> <?= $tahun ?></h5>
 					<?php endif ?>

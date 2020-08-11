@@ -11,6 +11,10 @@
 div { 
  text-align: center;
 }
+
+.rata-kanan {
+	text-align: right;
+}
 table {
  
 
@@ -22,14 +26,14 @@ table {
 
 table th {
 
-  padding: 9px 9px;
+  padding: 7px 5px;
   background: #000066;
   color: #fff;
   border: 2px solid #e0e0e0;
 }
 
 table td {
-  padding: 9px 9px;
+  padding: 7px 5px;
   border: 2px solid #e0e0e0;
 }
 
@@ -107,7 +111,7 @@ h3 {
 									// Bulan INI
 									// SALDO AWAL
 									// MENJUMLAH NOMINAL DARI SETIAP AKUN MENURUT POS AKUN
-										$date = $tahun-1;
+										$date = $tahun;
 										// $month = date('m');
 										$this->db->where('year(tanggal_transaksi)',$date);
 										// $this->db->where('month(tanggal_transaksi)',$month);
@@ -258,16 +262,27 @@ h3 {
 
 											} else {
 
-											
-												$this->db->where('year(tanggal_transaksi)',$tahun);
-												$this->db->where('month(tanggal_transaksi)',$bulan);
-												$this->db->select('SUM(debit) as total');
-												$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+												if ($this->input->post('tahun_post')){
+													$this->db->where('year(tanggal_transaksi)',$tahun);
+													$this->db->select('SUM(debit) as total');
+													$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
 
-												$this->db->where('year(tanggal_transaksi)',$tahun);
-												$this->db->where('month(tanggal_transaksi)',$bulan);
-												$this->db->select('SUM(kredit) as total');
-												$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+													$this->db->where('year(tanggal_transaksi)',$tahun);
+													$this->db->select('SUM(kredit) as total');
+													$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+												} else {
+													$this->db->where('year(tanggal_transaksi)',$tahun);
+													$this->db->where('month(tanggal_transaksi)',$bulan);
+													$this->db->select('SUM(debit) as total');
+													$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+
+													$this->db->where('year(tanggal_transaksi)',$tahun);
+													$this->db->where('month(tanggal_transaksi)',$bulan);
+													$this->db->select('SUM(kredit) as total');
+													$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+												}
+
+												
 											}
 											
 
@@ -285,14 +300,14 @@ h3 {
 						  		<tr>	
 					  				<td><?= $al['kode_akun'];?></td>
 					  				<td><?= $al['akun'];?></td>
-					  				<td><?= rupiah($total[$al['akun']] + $total_sa[$al['akun']]); ?></td>
+					  				<td><?= rupiah_cetak($total[$al['akun']] + $total_sa[$al['akun']]); ?></td>
 					  			
 								</tr>
 						  	<?php endforeach ?>
 							  	<tr>
 									<td style="background-color: #D7ECD9";></td>
 									<td style="background-color: #D7ECD9";>Jumlah <?= $a_pos; ?></td>
-									<td style="background-color: #D7ECD9";><?= rupiah(array_sum($total) + array_sum($total_sa)); ?></td>
+									<td style="background-color: #D7ECD9";><?= rupiah_cetak(array_sum($total) + array_sum($total_sa)); ?></td>
 									
 								</tr>
 							<?php 
@@ -303,7 +318,7 @@ h3 {
 							<tr style="background-color: #D7ECD9";>
 								<td style="background-color: #000; color: #fff;font-weight: bold;"></td>
 								<td style="background-color: #000; color: #fff;font-weight: bold;">Jumlah Total Aset</td>
-								<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah(array_sum($jumlah_a1)); ?></td>
+								<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah_cetak(array_sum($jumlah_a1)); ?></td>
 							
 							</tr>
 
@@ -333,7 +348,7 @@ h3 {
 									// Bulan INI
 									// MENJUMLAH NOMINAL DARI SETIAP AKUN MENURUT POS AKUN
 
-											$date = $tahun - 1;
+											$date = $tahun;
 											$this->db->where('year(tanggal_transaksi)',$date);
 											// $this->db->where('month(tanggal_transaksi)',$month);
 											$this->db->select('SUM(debit) as total');
@@ -488,8 +503,18 @@ h3 {
 
 											} else {
 
-											
+												if ($this->input->post('tahun_post')) {
+													$this->db->where('year(tanggal_transaksi)',$tahun);
+												
+												$this->db->select('SUM(debit) as total');
+												$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+
 												$this->db->where('year(tanggal_transaksi)',$tahun);
+												
+												$this->db->select('SUM(kredit) as total');
+												$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+												} else {
+													$this->db->where('year(tanggal_transaksi)',$tahun);
 												$this->db->where('month(tanggal_transaksi)',$bulan);
 												$this->db->select('SUM(debit) as total');
 												$debit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
@@ -498,6 +523,9 @@ h3 {
 												$this->db->where('month(tanggal_transaksi)',$bulan);
 												$this->db->select('SUM(kredit) as total');
 												$kredit = $this->db->get_where('transaksi',['akun' => $ap['akun']])->row()->total;
+												}
+											
+												
 											}
 											
 
@@ -522,12 +550,12 @@ h3 {
 						  				
 						  				<!-- SEBENARNYA TIDAK USAH PAKAI IF TIDAK PAPA -->
 						  				<!-- <?php if ($total[$al['akun']] + $total_saek[$al['akun']] < 0): ?>
-						  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+						  					<td><?= rupiah_cetak($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
 						  				<?php else: ?>	
-						  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+						  					<td><?= rupiah_cetak($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
 						  				<?php endif ?> -->
 
-					  					<td><?= rupiah($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+					  					<td><?= rupiah_cetak($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
 									</tr>
 
 								<?php endif; ?>
@@ -535,22 +563,33 @@ h3 {
 						  	<?php endforeach ?>
 						  		
 								<?php if ($a_pos == 'Ekuitas'): ?>
-								<!-- <tr>
-										<td></td>
-										<td>Laba Rugi</td>
-										<td><?= rupiah($lr); ?></td>
-								</tr> -->
+								<?php foreach ($klasifikasi_posakun as $al): ?>
+						  		
+							  		<tr>	
+						  				<td><?= $al['kode_akun'];?></td>
+						  				<td><?= $al['akun'];?></td>
+
+					  					<td><?= rupiah_cetak($total[$al['akun']] + $total_saek[$al['akun']]); ?></td>
+									</tr>
+								
+						  		<?php endforeach ?>
 
 								<tr>
+										<td></td>
+										<td>Laba Rugi</td>
+										<td><?= rupiah_cetak($lr); ?></td>
+								</tr>
+
+								<!-- <tr>
 					  					<td></td>
 					  					<td>Perubahan Modal</td>
-					  					<td><?= rupiah(array_sum($total) + array_sum($total_saek) + $lr); ?></td>
-					  				</tr>
+					  					<td><?= rupiah_cetak(array_sum($total) + array_sum($total_saek) + $lr); ?></td>
+					  				</tr> -->
 
 								<tr>
 										<td style="background-color: #D7ECD9";></td>
 										<td style="background-color: #D7ECD9";>Jumlah <?= $a_pos; ?></td>
-										<td style="background-color: #D7ECD9";><?= rupiah(array_sum($total) + array_sum($total_saek) + $lr); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak(array_sum($total) + array_sum($total_saek) + $lr); ?></td>
 						
 								</tr>
 								<?php 
@@ -561,7 +600,7 @@ h3 {
 								<tr>
 										<td style="background-color: #D7ECD9";></td>
 										<td style="background-color: #D7ECD9";>Jumlah <?= $a_pos; ?></td>
-										<td style="background-color: #D7ECD9";><?= rupiah(array_sum($total) + array_sum($total_saek)); ?></td>
+										<td style="background-color: #D7ECD9";><?= rupiah_cetak(array_sum($total) + array_sum($total_saek)); ?></td>
 						
 								</tr>
 								<?php 
@@ -576,7 +615,7 @@ h3 {
 							<tr style="background-color: #D7ECD9";>
 								<td style="background-color: #000; color: #fff;font-weight: bold;"></td>
 								<td style="background-color: #000; color: #fff;font-weight: bold;">Jumlah Total Kewajiban + Ekuitas</td>
-								<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah(array_sum($jumlah_ek1)); ?></td>
+								<td style="background-color: #000; color: #fff;font-weight: bold;"><?= rupiah_cetak(array_sum($jumlah_ek1)); ?></td>
 					
 							</tr>
 		<!-- END PERULANGAN PER POS AKUN -->

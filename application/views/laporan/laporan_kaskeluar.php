@@ -11,9 +11,10 @@
 div { 
  text-align: center;
 }
+.rata-kanan {
+	text-align: right;
+}
 table {
- 
-
   width: 1000px;
   border-collapse: collapse;
   margin-left:auto; /* Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
@@ -92,7 +93,7 @@ h4 {
 							  				<td><?= $kk['tanggal_transaksi'] ?>
 								  			<td><?= $kk['bukti_transaksi'] ?></td>
 											<td><?= $kk['keterangan'] ?></td>
-											<td><?= rupiah($kk['kredit']) ?></td>
+											<td><?= rupiah_cetak($kk['kredit']) ?></td>
 											<?php $kredit[] = $kk['kredit']; ?>							
 						  				</tr>
 						  				<?php $index++ ?>
@@ -106,9 +107,9 @@ h4 {
 						  				<td style="border: 0px;"></td>
 						  				<td>Total</td>
 						  				<?php if (!empty($kredit)) : ?>
-						  					<td><?= rupiah(array_sum($kredit)); ?></td>
+						  					<td><?= rupiah_cetak(array_sum($kredit)); ?></td>
 						  				<?php else : ?>
-						  					<td><?= rupiah(0); ?></td>
+						  					<td><?= rupiah_cetak(0); ?></td>
 						  				<?php endif; ?>
 					  				</tr>
 					  

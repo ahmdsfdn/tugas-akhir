@@ -193,7 +193,25 @@ class Master extends CI_Controller {
 		// if ($tahun == date('Y')) {
 		// 	$tahun2 = date('Y') - 1;	
 		// }
+
+		if ($this->input->post('katakunci')) {
+
+		$katakunci = $this->input->post('katakunci',true);
+		$this->db->like('kode_akun',$katakunci);
+		$this->db->or_like('tanggal_transaksi',$katakunci);
+		$this->db->or_like('pos_laporan',$katakunci);
+		$this->db->or_like('debit',$katakunci);
+		$this->db->or_like('kredit',$katakunci);
+		$this->db->or_like('akun',$katakunci);
+		$this->db->or_like('pos_akun',$katakunci);
+		$this->db->or_like('keterangan',$katakunci);
+		
+		$this->db->order_by('tanggal_transaksi', 'ASC');
+		$data['bukber'] = $this->db->get('saldo_awal')->result_array();
+		} else {
 		$data['bukber'] = $this->db->get_where('daftar_akun',['akun'])->result_array();
+		}
+	
 		//$data_coba = $this->Model_master->tampil_saldo_bb();
 		
 		// print_r($data_coba);

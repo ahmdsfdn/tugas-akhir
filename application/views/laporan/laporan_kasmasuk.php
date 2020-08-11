@@ -9,7 +9,10 @@
   		margin-bottom: 0px;
 }
 div { 
- text-align: center;
+ 	text-align: center;
+}
+.rata-kanan {
+	text-align: right;
 }
 table {
  
@@ -92,7 +95,7 @@ h4 {
 							  				<td><?= $km['tanggal_transaksi'] ?>
 								  			<td><?= $km['bukti_transaksi'] ?></td>
 											<td><?= $km['keterangan'] ?></td>
-											<td><?= rupiah($km['debit']) ?></td>
+											<td><?= rupiah_cetak($km['debit']) ?></td>
 											<?php $debit[] = $km['debit']; ?>							
 						  				</tr>
 						  				<?php $index++ ?>
@@ -106,9 +109,9 @@ h4 {
 						  				<td style="border: 0px;"></td>
 						  				<td>Total</td>
 						  				<?php if (!empty($debit)) : ?>
-						  					<td><?= rupiah(array_sum($debit)); ?></td>
+						  					<td><?= rupiah_cetak(array_sum($debit)); ?></td>
 						  				<?php else : ?>
-						  					<td><?= rupiah(0); ?></td>
+						  					<td><?= rupiah_cetak(0); ?></td>
 						  				<?php endif; ?>
 					  				</tr>
 					  

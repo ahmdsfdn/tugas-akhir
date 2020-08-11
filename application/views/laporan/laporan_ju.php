@@ -11,6 +11,9 @@
 div { 
  text-align: center;
 }
+.rata-kanan {
+	text-align: right;
+}
 table {
  
 
@@ -46,7 +49,7 @@ h4 {
 #header{
 			font-family: Arial, Helvetica, sans-serif;
 			width:900px; /* Digunakan untuk mengatur lebar header */
-			height: 150px;
+			height: 105px;
 			margin-left:auto; /* Digunakan untuk mengatur jarak header dengan tepian layar secara otomatis */
 			margin-right:auto; /* Sehingga tampilan header website akan berada tepat di tengah-tengah layar monitor */
 		}
@@ -77,10 +80,10 @@ h4 {
 							<th width="10%">Tanggal</th>
 							<th width="10%">Bukti Transaksi</th>
 							<th width="20%">Keterangan</th>
-							<th  width="20%">Akun</th>
+							<th  width="10%">Akun</th>
 							<th  width="10%">Kode Akun</th>
-							<th  width="15%">Debit</th>
-							<th  width="15%">Kredit</th>
+							<th  width="20%">Debit</th>
+							<th  width="20%">Kredit</th>
 					</tr>
 					
 				 
@@ -101,13 +104,13 @@ h4 {
 							  		<?php if ($ju['debit'] == 0): ?>
 								  		<td width="15%"></td>
 								  	<?php else: ?>
-								  		<td width="15%"><?= rupiah($ju['debit']) ?></td>
+								  		<td width="15%"><?= rupiah_cetak($ju['debit']) ?></td>
 								  	<?php endif ?>
 							  		
 							  		<?php if ($ju['kredit'] == 0): ?>
 								  		<td width="15%"></td>
 								  	<?php else: ?>
-								  		<td width="15%"><?= rupiah($ju['kredit']) ?></td>
+								  		<td width="15%"><?= rupiah_cetak($ju['kredit']) ?></td>
 								  	<?php endif ?>
 							  	<?php else : ?>
 							  		<?php $data_b = $ju['bukti_transaksi'];  ?>
@@ -120,13 +123,13 @@ h4 {
 							  		<?php if ($ju['debit'] == 0): ?>
 								  		<td  width="15%"></td>
 								  	<?php else: ?>
-								  		<td  width="15%"><?= rupiah($ju['debit']); ?></td>
+								  		<td  width="15%"><?= rupiah_cetak($ju['debit']); ?></td>
 								  	<?php endif ?>
 							  		
 							  		<?php if ($ju['kredit'] == 0): ?>
 								  		<td  width="15%"></td>
 								  	<?php else: ?>
-								  		<td  width="15%"><?= rupiah($ju['kredit']); ?></td>
+								  		<td  width="15%"><?= rupiah_cetak($ju['kredit']); ?></td>
 								  	<?php endif ?>
 								
 										  		
@@ -141,11 +144,11 @@ h4 {
 					  			<td style="border-bottom: 0px; border-left: 0px;border-right: 0px;"></td>
 					  			<td>Total</td>
 					  			<?php if (!empty($totaljp_d)): ?>
-					  			<td><?= rupiah($total_debit - array_sum($totaljp_d)); ?></td>
-					  			<td><?= rupiah($total_kredit - array_sum($totaljp_k)); ?></td>
+					  			<td><?= rupiah_cetak($total_debit - array_sum($totaljp_d)); ?></td>
+					  			<td><?= rupiah_cetak($total_kredit - array_sum($totaljp_k)); ?></td>
 					  			<?php else: ?>
-					  			<td><?= rupiah($total_debit) ;?></td>
-					  			<td><?= rupiah($total_kredit) ; ?></td>	
+					  			<td><?= rupiah_cetak($total_debit) ;?></td>
+					  			<td><?= rupiah_cetak($total_kredit) ; ?></td>	
 					  			<?php endif ?>
 					  			
 					  		</tr>

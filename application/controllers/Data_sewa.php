@@ -23,6 +23,7 @@ class Data_sewa extends CI_Controller {
 		$data['active']='active';
 		$data['status']=['L','BL'];
 		$data['user']=$this->db->get_where('user',['email'=>$this->session->userdata('email')])->row_array();
+		$data['dd_kendaraan'] = $this->db->get('data_kendaraan')->result();
 		//$data['data_sewa']=$this->Model_ds->tampil_datasewa();
 		$data['dd_bulan'] = $this->Model_labarugi->dd_bulan();
 		$this->load->view('templates/dash_header',$data);
@@ -93,6 +94,8 @@ class Data_sewa extends CI_Controller {
 
 		} else {
 
+		
+
 		$data['tambah_datasewa']=$this->Model_ds->tambah_datasewa();
 		$data['tambah_transaksi']=$this->Model_ds->tambah_transaksi_ds();
 		redirect('data_sewa');
@@ -108,9 +111,9 @@ class Data_sewa extends CI_Controller {
 		echo json_encode($data);
 	}
 
-	public function updatelunas($id_sewa)
+	public function updatelunas()
 	{
-		$this->Model_ds->updatelunas($id_sewa);
+		$this->Model_ds->updatelunas($this->input->post('id_update'));
 			redirect('data_sewa');
 	}
 

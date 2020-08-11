@@ -69,7 +69,7 @@
             <a class="collapse-item " href="<?= base_url(); ?>labarugi">Laba Rugi</a>
             <a class="collapse-item " href="<?= base_url(); ?>per_modal">Perubahan Modal</a>
             <a class="collapse-item " href="<?= base_url(); ?>poskeu">Posisi Keuangan</a>
-       
+            <a class="collapse-item " href="<?= base_url(); ?>labarugi/jurnal_penutup">Jurnal Penutup</a>
           </div>
         </div>
       </li>
@@ -154,6 +154,7 @@
             <a class="collapse-item " href="<?= base_url(); ?>labarugi">Laba Rugi</a>
             <a class="collapse-item " href="<?= base_url(); ?>per_modal">Perubahan Modal</a>
             <a class="collapse-item " href="<?= base_url(); ?>poskeu">Posisi Keuangan</a>
+            <a class="collapse-item " href="<?= base_url(); ?>labarugi/jurnal_penutup">Jurnal Penutup</a>
        
           </div>
         </div>

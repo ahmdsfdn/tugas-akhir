@@ -207,6 +207,7 @@ svg {
 
 table {
   border-collapse: collapse;
+  background-color: salmon;
 }
 
 caption {

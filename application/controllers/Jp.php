@@ -8,8 +8,6 @@ class Jp extends CI_Controller {
 		$this->load->model('Model_jp');
 		$this->load->model('Model_admin');
 		$this->load->library('form_validation');
-
-		
 	}
 
 	public function index()

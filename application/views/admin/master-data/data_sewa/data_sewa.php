@@ -32,7 +32,22 @@
 							<?php endif ?>
 							
 							<div class="col-6 col-sm-6 col-md-3 col-xl-1 mb-2 mb-md-2 mb-xl-0">
-								<a class="btn btn-dark" href="<?= base_url('data_sewa/cetak_ds') ?>">Cetak</a>
+								<form method="post" action="<?= base_url();?>data_sewa/cetak_ds">
+									<?php if ($this->input->post('tanggal_awal')): ?>
+								  <input type="text" name="tanggal_awal" value="<?= $this->input->post('tanggal_awal') ?>" hidden >
+								  <input type="text" name="tanggal_akhir" value="<?= $this->input->post('tanggal_akhir') ?>" hidden>
+								  <?php elseif($this->input->post('tahun_post') && ($this->input->post('bulan_post'))) : ?>
+								  <input type="type" name="bulan_post" hidden value="<?= $this->input->post('bulan_post')  ?>">
+								  <input type="text" name="tahun_post" hidden value="<?= $this->input->post('tahun_post') ?>">
+								  <?php elseif($this->input->post('tahun_post')) : ?>
+								  <input type="text" name="tahun_post" hidden value="<?= $this->input->post('tahun_post') ?>">
+								  <?php else: ?>
+								 	<input type="text" name="katakunci" hidden value="<?= $this->input->post('katakunci') ?>">
+								  <?php endif ?>
+
+								  <button type="submit" class="btn btn-warning">Cetak</button>	
+					  			</form>
+								
 							</div>
 							<div class="col col-sm-6 col-md-3 col-xl-1 mb-2 mb-md-2 mb-xl-0">
 								<a class="btn btn-success" href="<?= base_url('data_sewa')?>">Reset</a>
@@ -45,7 +60,18 @@
 							
 								<form action="" method="post">
 									<div class="input-group">
-									   <input type="text" class="form-control" placeholder="Cari data jurnal" name="katakunci" value="">
+									 
+									   <select type="text" name="katakunci" class="custom-select"> 
+									   	<option selected >Pilih Kendaraan</option>
+									   	<?php foreach ($dd_kendaraan as $d_knd ) : ?>
+									   		<?php $data_k = $d_knd->nama.'-'.$d_knd->plat ?>
+									   		<?php if ( $data_k == $this->input->post('katakunci')): ?>
+									   			<option value="<?= $d_knd->nama.'-'.$d_knd->plat ?>" selected><?= $d_knd->nama.'-'.$d_knd->plat ?></option>
+									   		<?php else: ?>
+									   			<option value="<?= $d_knd->nama.'-'.$d_knd->plat ?>"><?= $d_knd->nama.'-'.$d_knd->plat ?></option>
+									   		<?php endif ?>
+									   	<?php endforeach; ?>
+									   </select>
 									  
 									  <div class="input-group-append">
 									    <button class="btn btn-dark" type="submit">Cari
@@ -189,9 +215,9 @@
 		 	?>
 		<?php elseif($this->input->post('katakunci')) : ?>
 			<?php 
-			$this->db->like('nama_penyewa',$this->input->post('katakunci'));
-			$this->db->or_like('kendaraan',$this->input->post('katakunci'));
-			$status_sewa = $this->db->get_where('data_sewa', ['status' => $st])->result_array(); ?>
+			// $this->db->like('nama_penyewa',$this->input->post('katakunci'));
+			// $this->db->or_like('kendaraan',$this->input->post('katakunci'));
+			$status_sewa = $this->db->get_where('data_sewa', ['status' => $st, 'kendaraan' => $this->input->post('katakunci')])->result_array(); ?>
 		<?php else: ?>
 			<?php 
 			$this->db->where('month(tgl_sewa)', $bulan);
@@ -206,7 +232,7 @@
 				<div class="col">
 					
 					<div class="table-responsive text-center">
-						  <table class="table table-bordered align-self-center">
+						  <table style="width: 1200px;" class="table table-bordered align-self-center">
 						  		
 						   	<thead>					   		
 						   		<tr>
@@ -214,14 +240,14 @@
 						   			<th>Nama Penyewa</th>
 						   			<th>Tanggal Sewa</th>
 						   			<th>Tanggal Kembali</th>
-						   			<th >Biaya Sewa</th>
+						   			<th>Biaya Sewa</th>
 						   			<th>Uang Muka</th>
 
 						   			<?php if ($st == 'BL'): ?>
 						   				<!-- TABEL KOSONG -->
 						   				
 						   			<?php else : ?>
-						   				<th >Bayar</th>
+						   				<th>Bayar</th>
 							   			<th>Tanggal Lunas</th>
 						   			<?php endif; ?>
 
@@ -241,8 +267,8 @@
 						   				<td><?= $ss['nama_penyewa']; ?></td>
 						   				<td><?= $ss['tgl_sewa']; ?></td>
 						   				<td><?= $ss['tgl_kembali']; ?></td>
-						   				<td><?= rupiah($ss['biaya_sewa']); ?></td>
-						   				<td><?= rupiah($ss['uang_muka']); ?></td>
+						   				<td style="min-width: 160px;"><?= rupiah($ss['biaya_sewa']); ?></td>
+						   				<td style="min-width: 160px;"><?= rupiah($ss['uang_muka']); ?></td>
 
 						   			<?php if ($user['role_id'] == 2): ?>
 						   				
@@ -250,14 +276,14 @@
 						   				<?php if ($st == 'BL'): ?>
 							   			<!-- TABEL KOSONG -->
 
-							   			<td class="d-flex justify-content-around"><a href="<?= base_url(); ?>data_sewa/updatelunas/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-primary mb-1 mb-xl-0 mr-1"><i class="fa fa-check"></i></a><a  href="<?= base_url(); ?>data_sewa/update_ds/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-success  mr-1"><i class="fa fa-pen"></i></a><a href="<?= base_url(); ?>data_sewa/hapusdata/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a></td>
+							   			<td class="d-flex justify-content-around"><a href="" class="btn btn-sm btn-primary mb-1 mb-xl-0 mr-1" data-toggle="modal" data-target="#exampleModal" data-tanggal="<?= $ss['tgl_kembali'] ?>"data-mobil="<?= $ss['kendaraan'] ?>"data-id="<?= $ss['id_sewa']; ?>"><i class="fa fa-check"></i></a><a  href="<?= base_url(); ?>data_sewa/update_ds/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-success  mr-1"><i class="fa fa-pen"></i></a><a href="<?= base_url(); ?>data_sewa/hapusdata/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a></td>
 							   			<?php else : ?>
-									   		<td><?= rupiah($ss['bayar']); ?></td>
+									   		<td style="min-width: 160px;"><?= rupiah($ss['bayar']); ?></td>
 							   				<td><?= $ss['tgl_lunas']; ?></td>
 							   				<td><a href="<?= base_url(); ?>data_sewa/update_ds/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-success mr-1 mb-1 mb-xl-0"><i class="fa fa-pen"></i></a><a href="<?= base_url(); ?>data_sewa/hapusdata/<?= $ss['id_sewa']; ?>" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a></td>
 							   			<?php endif; ?>
 							   		<?php else: ?>
-							   			<td><?= rupiah($ss['bayar']); ?></td>
+							   			<td style="min-width: 160px;"><?= rupiah($ss['bayar']); ?></td>
 						   				<td><?= $ss['tgl_lunas']; ?></td>
 							   		<?php endif ?>
 						   				
@@ -271,15 +297,40 @@
 			</div>
 		<?php endforeach; ?>
 	
-
-
-
 	</div>
 </div>
 </div>
-
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <form action="<?= base_url(); ?>data_sewa/updatelunas/" method="POST">
+	      <div class="modal-body">
+	       
+	           <input hidden type="text" name="id_update" class="form-control id_kendaraan" id="recipient-name">
+	   
+	          <div class="form-group">
+	            <label for="message-text" class="col-form-label">Tanggal Pelunasan:</label>
+	            <input value="" name="tanggal_lunas" class="form-control tanggal_lunas" type="date" id="message-text"></input>
+	          </div>
+	    
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+	        <button type="submit" class="btn btn-primary">Update</button>
+	      </div>
+      </form>
+    </div>
+  </div>
+</div>
 <script type="text/javascript" src="<?php echo base_url().'assets/js/jquery.js'?>"></script>
 <script type="text/javascript">
+
 
 	$(document).ready(function(){
 
@@ -295,6 +346,9 @@
 					}
 			
 			});
+
+		
+
 	});
 </script>
 

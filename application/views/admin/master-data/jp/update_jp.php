@@ -2,7 +2,7 @@
 <div class="container-fluid">
 
           <!-- Page Heading -->
-  <h1 class="h3 mb-4 text-gray-800">Input Transaksi</h1>
+  <h1 class="h3 mb-4 text-gray-800">Ubah Penyesuaian</h1>
 
   	
     

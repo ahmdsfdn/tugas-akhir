@@ -179,7 +179,7 @@
 		<fieldset id="form_piutang" disabled hidden>
 			
 			<!-- piutang jasa -->
-			<input type="text" name="akun[]" id="akun_piutang" value="Piutang Jasa">
+			<input type="text" name="akun[]" id="akun_piutang" value="Piutang Usaha">
 			<button type="button" hidden id="ubah_piutang">ubah</button>
 			<input type="text" name="keterangan[]" id="keterangan_piutang" value="">
 			<input type="text" name="tanggal_transaksi[]" id="tanggal_transaksi_piutang" value="">

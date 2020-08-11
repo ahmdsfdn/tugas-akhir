@@ -213,6 +213,7 @@ svg {
 
 table {
   border-collapse: collapse;
+  height: 1px;
 }
 
 table.table {
@@ -1377,6 +1378,7 @@ pre code {
 
 .table th,
 .table td {
+  height: 100%;
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #e3e6f0;
